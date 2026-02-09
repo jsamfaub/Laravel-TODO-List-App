@@ -59,7 +59,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $this->authorize('update', $task);
+
+        return view('tasks.edit', compact('task')); //TODO voir ce qu'est compact
     }
 
     /**
@@ -67,7 +69,19 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $this->authorize('update', $task);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255', //TODO définir les critères pour name
+            ],
+            [
+                'name.required' => 'Name can\'t be empty!',
+                'name.max' => 'Name must be 255 characters or less.',
+            ]);
+
+            $task->update($validated);
+
+            return redirect('/')->with('success', 'Task updated!');
     }
 
     /**

@@ -11,6 +11,7 @@
                 @method('DELETE')
                 @csrf
 
+                <a href="/tasks/{{ $task->id }}/edit">Edit</a>
                 <button type="submit">Delete</button>
             </form>
         </div>

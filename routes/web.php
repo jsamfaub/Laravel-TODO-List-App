@@ -12,6 +12,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/tasks/{task}/markAsCompleted', [TaskController::class, 'markAsCompleted']);
     Route::post('/tasks/{task}/markAsNotCompleted', [TaskController::class, 'markAsNotCompleted']);
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
 
     Route::post('/logout', Logout::class);
