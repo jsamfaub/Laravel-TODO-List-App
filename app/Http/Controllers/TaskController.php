@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -33,17 +34,19 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255', //TODO définir les critères pour name
+        $validated = $request->validate(
+            [
+                'name' => 'required|string|max:255', //TODO définir les critères pour name
             ],
             [
                 'name.required' => 'Name can\'t be empty!',
                 'name.max' => 'Name must be 255 characters or less.',
-            ]);
+            ]
+        );
 
-            auth()->user()->tasks()->create($validated);
+        auth()->user()->tasks()->create($validated);
 
-            return redirect('/')->with('success', 'Task has been created!');
+        return redirect('/')->with('success', 'Task has been created!');
     }
 
     /**
@@ -71,17 +74,19 @@ class TaskController extends Controller
     {
         $this->authorize('update', $task);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255', //TODO définir les critères pour name
+        $validated = $request->validate(
+            [
+                'name' => 'required|string|max:255', //TODO définir les critères pour name
             ],
             [
                 'name.required' => 'Name can\'t be empty!',
                 'name.max' => 'Name must be 255 characters or less.',
-            ]);
+            ]
+        );
 
-            $task->update($validated);
+        $task->update($validated);
 
-            return redirect('/')->with('success', 'Task updated!');
+        return redirect('/')->with('success', 'Task updated!');
     }
 
     /**
@@ -96,13 +101,21 @@ class TaskController extends Controller
         return redirect('/')->with('success', 'Task deleted');
     }
 
-    public function markAsComplete(Task $task)
+    public function markAsCompleted(Task $task)
     {
-        //TODO
+        $this->authorize('update', $task);
+
+        $task->markAsCompleted();
+
+        return redirect('/')->with('success', 'Task completed status updated!');
     }
 
-    public function markAsNotComplete(Task $task)
+    public function markAsNotCompleted(Task $task)
     {
-        //TODO
+        $this->authorize('update', $task);
+
+        $task->markAsNotCompleted();
+
+        return redirect('/')->with('success', 'Task completed status erased!');
     }
 }
