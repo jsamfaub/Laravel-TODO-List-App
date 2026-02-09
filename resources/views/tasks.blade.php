@@ -6,6 +6,13 @@
     @foreach ($tasks as $task)
         <div>
             Name : {{ $task->name }}
+
+            <form action="/tasks/{{ $task->id }}" method="POST">
+                @method('DELETE')
+                @csrf
+
+                <button type="submit">Delete</button>
+            </form>
         </div>
     @endforeach
 
