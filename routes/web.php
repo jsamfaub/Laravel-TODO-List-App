@@ -14,7 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
 
-    Route::view('/logout', Logout::class);
+    Route::post('/logout', Logout::class);
 
     Route::view('/', 'home');
 });
