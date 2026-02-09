@@ -7,8 +7,6 @@
         <div>
             Name : {{ $task->name }}
 
-            Completed_at : {{ var_dump($task->completed_at) }}
-
             <form action="/tasks/{{ $task->id }}" method="POST">
                 @method('DELETE')
                 @csrf
@@ -17,17 +15,19 @@
                 <button type="submit">Delete</button>
             </form>
 
-            <form action="/tasks/{{ $task->id }}/markAsCompleted" method="POST">
-                @csrf
+            @if (is_null($task->completed_at))
+                <form action="/tasks/{{ $task->id }}/markAsCompleted" method="POST">
+                    @csrf
 
-                <button type="submit">markAsCompleted</button>
-            </form>
+                    <button type="submit">Mark as completed</button>
+                </form>
+            @else
+                <form action="/tasks/{{ $task->id }}/markAsNotCompleted" method="POST">
+                    @csrf
 
-            <form action="/tasks/{{ $task->id }}/markAsNotCompleted" method="POST">
-                @csrf
-
-                <button type="submit">markAsNotCompleted</button>
-            </form>
+                    <button type="submit">Mark as not completed</button>
+                </form>
+            @endif
         </div>
     @endforeach
 
