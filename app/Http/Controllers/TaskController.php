@@ -12,7 +12,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all(); //TODO seulement celle de l'utilisateur authentifié
+
+        return view('tasks', ['tasks' => $tasks]);
     }
 
     /**

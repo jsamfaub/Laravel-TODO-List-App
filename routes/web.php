@@ -8,15 +8,13 @@ use App\Http\Controllers\Auth\Login;
 
 Route::middleware('auth')->group(function () {
     Route::post('/tasks', [TaskController::class, 'store']);
-    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::get('/', [TaskController::class, 'index']);
     Route::post('/tasks/{task}/markAsCompleted', [TaskController::class, 'markAsCompleted']);
     Route::post('/tasks/{task}/markAsNotCompleted', [TaskController::class, 'markAsNotCompleted']);
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
 
     Route::post('/logout', Logout::class);
-
-    Route::view('/', 'home');
 });
 
 Route::middleware('guest')->group(function () {
