@@ -30,7 +30,17 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255', //TODO définir les critères pour name
+            ],
+            [
+                'name.required' => 'Name can\'t be empty!',
+                'name.max' => 'Name must be 255 characters or less.',
+            ]);
+
+            auth()->user()->tasks()->create($validated);
+
+            return redirect('/')->with('success', 'Task has been created!');
     }
 
     /**

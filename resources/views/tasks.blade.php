@@ -8,4 +8,10 @@
             Name : {{ $task->name }}
         </div>
     @endforeach
+
+    <form method="POST" action="/tasks">
+        @csrf
+        <input name="name" />
+        <button type="submit">Create</button>
+    </form>
 </div>
