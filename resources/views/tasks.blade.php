@@ -5,6 +5,7 @@
     </form>
     @foreach ($tasks as $task)
         <div>
+            <!-- TODO user exclusivity -->
             Name : {{ $task->name }}
 
             <form action="/tasks/{{ $task->id }}" method="POST">

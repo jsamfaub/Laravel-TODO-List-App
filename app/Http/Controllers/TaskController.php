@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all(); //TODO seulement celle de l'utilisateur authentifié
+        $tasks = auth()->user()->tasks; //TODO vérifier que ce sont seulement les tâches de l'utilisateur authentifié
 
         return view('tasks', ['tasks' => $tasks]);
     }
